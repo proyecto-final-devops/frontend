@@ -1,0 +1,54 @@
+<div class="container">
+  <nav class="navbar py-3">
+    <a [routerLink]="['/shop']">
+      <figure style="max-width: 10rem;">
+        <img src="assets/f1-logo.png" alt="Formula 1 Logo">
+      </figure>
+    </a>
+  </nav>
+
+  <section>
+    <div *ngIf="cartItemsAmount() > 0; else emptyCart">
+      <div class="d-flex flex-column align-items-center">
+        <div class="col-12 col-md-7">
+          <div class="mb-3 d-flex align-items-center justify-content-between">
+            <h1>Checkout</h1>
+            <p class="text-primary">Total de productos ({{ cartItemsAmount() }})</p>
+          </div>
+
+            <div class="w-100" *ngFor="let cartItem of cartItems(); trackBy: trackByFn">
+              <app-cart-item-card
+                [id]="cartItem.id.toString()"
+                [img]="cartItem.img"
+                [title]="cartItem.title"
+                [price]="cartItem.price"
+                [description]="cartItem.description"
+                [stock]="cartItem.stock"
+                [quantity]="cartItem.quantity"
+              />
+            </div>
+
+
+          <div class="d-flex align-items-center justify-content-between mb-5">
+            <div>
+              <h4 class="m-0">Total a pagar:</h4>
+              <h2 class="text-primary fw-bold m-0">{{ totalPrice() | currency: 'MXN' }}</h2>
+            </div>
+            <button class="btn btn-primary" type="button" (click)="onCheckout()">
+              Realizar compra
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #emptyCart>
+      <div class="border rounded p-5 d-flex flex-column align-items-center justify-content-between">
+        <i class="fa-solid fa-cart-shopping fs-1 mb-3"></i>
+        <h4>Aún no hay productos en su carrito de compras</h4>
+        <a [routerLink]="['/shop']">Regresar a comprar</a>
+      </div>
+    </ng-template>
+  </section>
+</div>
+
