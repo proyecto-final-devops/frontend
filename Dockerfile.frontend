@@ -1,0 +1,22 @@
+# Etapa 1: Construcción de Angular
+FROM node:18 AS build
+# Establece el directorio de trabajo en /app
+WORKDIR /app
+# Instala dependencias de Angular
+COPY package.json package-lock.json ./
+RUN npm install
+
+COPY . .
+
+#app-f1-shop es el nombre del proyecto angular
+RUN npm run build -- --output-path=dist/app-f1-shop
+
+#Etapa 2: Servidor ngix
+FROM nginx:alpine
+
+#copia archivos construidos de Angular al directorio de nginx
+COPY --from=build /app/dist/app-f1-shop /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
