@@ -1,53 +1,53 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-// import { AuthService } from '../../services/auth/auth.service';
-import { Router, RouterLink } from '@angular/router';
-// import { ToastService } from '../../services/toast/toast.service';
+import { AuthService } from '../../services/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
-  imports: [ReactiveFormsModule, RouterLink ],
+  imports: [ReactiveFormsModule],
   templateUrl: './sign-up.component.html',
-  styleUrl: './sign-up.component.scss'
+  styleUrls: ['./sign-up.component.scss'],
 })
-
 export class SignUpComponent implements OnInit {
+  errorMessage: string | null = null; // Variable para manejar el error
 
   constructor(
-    // private authService: AuthService,
-    private router: Router,
-    // private toast: ToastService
-  ){}
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    localStorage.removeItem('token')
+    localStorage.removeItem('token');
   }
-  
-  form: FormGroup<{ email:FormControl<string | null>, name:FormControl<string | null>, password:FormControl<string | null> }> = new FormGroup({
+
+  form: FormGroup<{ email: FormControl<string | null>, name: FormControl<string | null>, password: FormControl<string | null> }> = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     name: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required, Validators.minLength(6)])
-  })
+    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+  });
 
   public async onSubmit() {
-    if(this.form.invalid) {
-      // this.toast.show({ body: 'Favor de completar todos los campos' })
-      return
-    };
+    if (this.form.invalid) {
+      this.errorMessage = 'Favor de completar todos los campos';
+      return;
+    }
 
     try {
-      const {email, name, password} = this.form.value;
-      // const { token } = await this.authService.register({
-      //   email: email ?? '',
-      //   name: name ?? '',
-      //   password: password ?? ''
-      // });
+      const nombre = this.form.value.name ?? '';
+      const correo = this.form.value.email ?? '';
+      const password = this.form.value.password ?? '';
 
-      // localStorage.setItem('token', token);
-      this.router.navigate(['/products']);
+      const response = await this.authService.register({ name: nombre, email: correo, password }).toPromise();
+      if (response && response.token) {
+        localStorage.setItem('token', response.token);
+        this.router.navigate(['/products']);
+      } else {
+        this.errorMessage = 'Respuesta inesperada del servidor';
+      }
     } catch (error: any) {
-      // this.toast.show({ body: error.error.error || 'Ocurrió un error' })
-      console.error(error)
+      this.errorMessage = error.error?.error || 'Ocurrió un error';
+      console.error(error);
     }
   }
 }

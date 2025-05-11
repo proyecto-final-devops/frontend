@@ -1,50 +1,51 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-// import { AuthService } from '../../services/auth/auth.service';
-import { Router, RouterLink } from '@angular/router';
-// import { ToastService } from '../../services/toast/toast.service';
+import { AuthService } from '../../services/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, RouterLink ],
+  imports: [ReactiveFormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss',
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  
+  errorMessage: string | null = null; // Variable para manejar el error
+
   constructor(
-    // private authService: AuthService,
-    private router: Router,
-    // private toast: ToastService
-  ){}
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    localStorage.removeItem('token')
+    localStorage.removeItem('token');
   }
 
-  form: FormGroup<{ email:FormControl<string | null>, password:FormControl<string | null> }> = new FormGroup({
+  form: FormGroup<{ email: FormControl<string | null>, password: FormControl<string | null> }> = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required])
-  })
+  });
 
   public async onSubmit() {
-    // if(this.form.invalid) {
-    //   this.toast.show({ body: 'Favor de completar todos los campos' })
-    //   return
-    // };
+    if (this.form.invalid) {
+      this.errorMessage = 'Favor de completar todos los campos';
+      return;
+    }
 
     try {
-      // const {email, password} = this.form.value
-      // const { token } = await this.authService.login({
-      //   email: email ?? '',
-      //   password: password ?? ''
-      // })
+      const correo = this.form.value.email?.trim() ?? '';
+      const password = this.form.value.password?.trim() ?? '';
 
-      // localStorage.setItem('token', token);
-      this.router.navigate(['/shop']);
+      const response = await this.authService.login({ email: correo, password }).toPromise();
+      if (response && response.token) {
+        localStorage.setItem('token', response.token);
+        this.router.navigate(['/shop']);
+      } else {
+        this.errorMessage = 'Respuesta inesperada del servidor';
+      }
     } catch (error: any) {
-      // this.toast.show({ body: error.error.error || 'Ocurrió un error' })
-      console.error(error)
+      this.errorMessage = error.error?.error || 'Ocurrió un error al iniciar sesión';
+      console.error('Error en login:', error);
     }
   }
 }
