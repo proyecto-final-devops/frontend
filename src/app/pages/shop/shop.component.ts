@@ -28,8 +28,18 @@ export class ShopComponent implements OnInit {
   }
 
   fetchProducts(): void {
-    this.http.get<Product[]>(`${environment.apiUrl}/productos`).subscribe({
-      next: (data) => this.products.set(data),
+    this.http.get<any[]>(`${environment.apiUrl}/productos`).subscribe({
+      next: (data) => {
+        const products = data.map(p => ({
+          id: p.id,
+          title: p.title,
+          description: p.description,
+          price: p.price,
+          stock: p.stock,
+          img: p.imagen  // ← mapeas imagen → img aquí
+        }));
+        this.products.set(products);
+      },
       error: (err) => console.error('Error al obtener productos:', err)
     });
   }
