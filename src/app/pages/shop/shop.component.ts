@@ -6,7 +6,7 @@ import { ProductCardComponent } from '../../components/product-card/product-card
 import { CartItem, Product } from '../../models';
 import { CheckoutStoreService } from '../../services';
 
-import { environment } from '../../../environment';
+import { environment } from '../../../environments/environment';
 
 @Component({
   standalone: true,

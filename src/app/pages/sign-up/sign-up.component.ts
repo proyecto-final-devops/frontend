@@ -23,12 +23,12 @@ export class SignUpComponent implements OnInit {
 
   form: FormGroup<{
     correo: FormControl<string | null>,
-    name: FormControl<string | null>,
+    username: FormControl<string | null>, // Cambiado de 'name' a 'username'
     password: FormControl<string | null>,
     tipo_usuario: FormControl<string | null>
   }> = new FormGroup({
     correo: new FormControl('', [Validators.required, Validators.email]),
-    name: new FormControl('', [Validators.required]),
+    username: new FormControl('', [Validators.required]), // Cambiado de 'name' a 'username'
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
     tipo_usuario: new FormControl('', [Validators.required])
   });
@@ -37,13 +37,13 @@ export class SignUpComponent implements OnInit {
     if (this.form.invalid) return;
 
     try {
-      const { correo, name, password, tipo_usuario } = this.form.value;
+      const { correo, username, password, tipo_usuario } = this.form.value; // Cambiado 'name' a 'username'
 
       console.log('Datos del formulario:', this.form.value); // Log para depuración
 
       const response = await this.authService.registerUser({
         correo: correo ?? '',
-        username: name ?? '',
+        username: username ?? '', // Cambiado 'name' a 'username'
         password: password ?? '',
         tipo_usuario: tipo_usuario ?? ''
       });

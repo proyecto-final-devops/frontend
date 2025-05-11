@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
-import { environment } from '../../../environment';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +22,8 @@ export class AuthService {
     );
   }
   registerUser(data: {
-    correo: string,
     username: string,
+    correo: string,
     password: string,
     tipo_usuario: string
   }) {

@@ -8,7 +8,7 @@ import { CheckoutStoreService } from '../../services';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 
-import {environment} from '../../../environment';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-checkout',

@@ -2,7 +2,7 @@ import { computed, Injectable, signal } from '@angular/core';
 import { CartItem } from '../../models';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../../environment';
+import { environment } from '../../../environments/environment';
 
 
 @Injectable({
