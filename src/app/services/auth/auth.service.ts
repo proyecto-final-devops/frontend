@@ -21,4 +21,16 @@ export class AuthService {
       }>(`${this.apiUrl}/login`, credentials)
     );
   }
+  registerUser(data: {
+    correo: string,
+    username: string,
+    password: string,
+    tipo_usuario: string
+  }) {
+    console.log('Datos enviados al backend:', data); // Log para depuración
+    return firstValueFrom(
+      this.http.post<any>(`${this.apiUrl}/register`, data)
+    );
+  }
+  
 }

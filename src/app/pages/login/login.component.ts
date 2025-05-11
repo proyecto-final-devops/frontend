@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
   }
 
   form: FormGroup<{ correo: FormControl<string | null>, password: FormControl<string | null> }> = new FormGroup({
-    correo: new FormControl('', [Validators.required, Validators.email]),  // Asegúrate de usar 'correo'
+    correo: new FormControl('', [Validators.required, Validators.email]),  
     password: new FormControl('', [Validators.required])
   });
 
