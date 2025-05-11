@@ -1,50 +1,50 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-// import { AuthService } from '../../services/auth/auth.service';
+import { AuthService } from '../../services/auth/auth.service';  
 import { Router, RouterLink } from '@angular/router';
-// import { ToastService } from '../../services/toast/toast.service';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, RouterLink ],
+  imports: [ReactiveFormsModule, RouterLink], // Agrega RouterModule aquí
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
 export class LoginComponent implements OnInit {
   
   constructor(
-    // private authService: AuthService,
+    private authService: AuthService,  
     private router: Router,
-    // private toast: ToastService
   ){}
 
   ngOnInit(): void {
-    localStorage.removeItem('token')
+    localStorage.removeItem('token');
   }
 
-  form: FormGroup<{ email:FormControl<string | null>, password:FormControl<string | null> }> = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
+  form: FormGroup<{ correo: FormControl<string | null>, password: FormControl<string | null> }> = new FormGroup({
+    correo: new FormControl('', [Validators.required, Validators.email]),  // Asegúrate de usar 'correo'
     password: new FormControl('', [Validators.required])
-  })
+  });
 
   public async onSubmit() {
-    // if(this.form.invalid) {
-    //   this.toast.show({ body: 'Favor de completar todos los campos' })
-    //   return
-    // };
+    if (this.form.invalid) return;
 
     try {
-      // const {email, password} = this.form.value
-      // const { token } = await this.authService.login({
-      //   email: email ?? '',
-      //   password: password ?? ''
-      // })
+      const { correo, password } = this.form.value;
 
-      // localStorage.setItem('token', token);
+      const response = await this.authService.login({
+        correo: correo ?? '',
+        password: password ?? ''
+      });
+
+   
+      localStorage.setItem('correo', response.correo);
+      localStorage.setItem('password', response.password);
+      localStorage.setItem('tipo_usuario', response.tipo_usuario);
+
       this.router.navigate(['/shop']);
     } catch (error: any) {
-      // this.toast.show({ body: error.error.error || 'Ocurrió un error' })
-      console.error(error)
+      console.error('Error en login', error);
+      alert(error?.error?.error || 'Login fallido');
     }
   }
 }
