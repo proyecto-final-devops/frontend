@@ -30,7 +30,10 @@ export class AuthService {
     console.log('Datos enviados al backend:', data); // Log para depuración
     return firstValueFrom(
       this.http.post<any>(`${this.apiUrl}/register`, data)
-    );
+    ).catch(error => {
+      console.error('Error en la solicitud de registro:', error); // Log de errores
+      throw error;
+    });
   }
   
 }

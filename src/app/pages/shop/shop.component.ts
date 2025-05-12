@@ -32,11 +32,11 @@ export class ShopComponent implements OnInit {
       next: (data) => {
         const products = data.map(p => ({
           id: p.id,
-          title: p.title,
-          description: p.description,
-          price: p.price,
+          title: p.titulo,
+          description: p.descripcion,
+          price: p.precio,
           stock: p.stock,
-          img: p.imagen  // ← mapeas imagen → img aquí
+          img: p.imagen  
         }));
         this.products.set(products);
       },

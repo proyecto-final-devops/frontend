@@ -1,0 +1,57 @@
+<div class="container">
+  <nav class="navbar py-3">
+    <a routerLink="/shop">
+      <figure style="max-width: 10rem;">
+        <img src="assets/f1-logo.png" alt="Formula 1 Logo">
+      </figure>
+    </a>
+    <div class="d-flex align-items-center">
+      <a class="link-offset-2 link-underline link-underline-opacity-0 me-3 text-black" routerLink="/login">Cerrar sesión</a>
+    </div>
+  </nav>
+
+  <section class="mt-4">
+    <h1>Panel de Administración</h1>
+
+    <form [formGroup]="form" (ngSubmit)="agregarProducto()" class="mb-5">
+      <div class="mb-3">
+        <label class="form-label">Título</label>
+        <input class="form-control" formControlName="titulo" placeholder="Título del producto">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Descripción</label>
+        <input class="form-control" formControlName="descripcion" placeholder="Descripción del producto">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Imagen (URL)</label>
+        <input class="form-control" formControlName="imagen" placeholder="https://...">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Precio</label>
+        <input type="number" class="form-control" formControlName="precio">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Stock</label>
+        <input type="number" class="form-control" formControlName="stock">
+      </div>
+      <button class="btn btn-primary w-100 mt-3" type="submit">Agregar producto</button>
+    </form>
+
+    <div class="mb-3">
+      <h2>Modificar stock</h2>
+        <div *ngFor="let producto of productos" class="card p-3 mb-3">
+             <h5>{{ producto.titulo }}</h5>
+             <p>{{ producto.descripcion }}</p>
+             <input [(ngModel)]="producto.titulo" placeholder="Título" class="form-control mb-1" />
+             <input [(ngModel)]="producto.descripcion" placeholder="Descripción" class="form-control mb-1" />
+             <input [(ngModel)]="producto.imagen" placeholder="URL Imagen" class="form-control mb-1" />
+             <input type="number" [(ngModel)]="producto.precio" placeholder="Precio" class="form-control mb-1" />
+             <input type="number" [(ngModel)]="producto.stockTemp" placeholder="Nuevo stock" class="form-control mb-1" />
+            <button class="btn btn-primary mt-2" (click)="actualizarProducto(producto)">Guardar cambios</button>
+            <button class="btn btn-danger mt-2 ms-2" (click)="eliminarProducto(producto.id)">Eliminar producto</button>
+
+        </div>
+
+    </div>
+  </section>
+</div>

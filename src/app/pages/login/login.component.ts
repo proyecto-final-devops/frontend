@@ -41,7 +41,12 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('password', response.password);
       localStorage.setItem('tipo_usuario', response.tipo_usuario);
 
-      this.router.navigate(['/shop']);
+       
+      if (response.tipo_usuario === 'admin') {
+        this.router.navigate(['/vista-admin']);
+      } else {
+        this.router.navigate(['/shop']);
+      }
     } catch (error: any) {
       console.error('Error en login', error);
       alert(error?.error?.error || 'Login fallido');

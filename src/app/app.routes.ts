@@ -5,11 +5,14 @@ import { LoginComponent } from './pages/login/login.component';
 import { ShopComponent } from './pages/shop/shop.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
+import { VistaAdminComponent } from './pages/vista-admin/vista-admin.component';
+
 
 export const routes: Routes = [
   { path: 'checkout', component: CheckoutComponent},
   { path: 'login', component: LoginComponent },
   { path: 'shop', component: ShopComponent },
   { path: 'sign-up', component: SignUpComponent},
+  { path: 'vista-admin', component: VistaAdminComponent},
   { path: '**', redirectTo: 'login' }
 ];

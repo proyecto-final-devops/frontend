@@ -23,27 +23,36 @@ export class SignUpComponent implements OnInit {
 
   form: FormGroup<{
     correo: FormControl<string | null>,
-    username: FormControl<string | null>, // Cambiado de 'name' a 'username'
+    username: FormControl<string | null>,
     password: FormControl<string | null>,
     tipo_usuario: FormControl<string | null>
   }> = new FormGroup({
     correo: new FormControl('', [Validators.required, Validators.email]),
-    username: new FormControl('', [Validators.required]), // Cambiado de 'name' a 'username'
+    username: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
     tipo_usuario: new FormControl('', [Validators.required])
   });
 
   public async onSubmit() {
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+      console.warn('Formulario inválido:', this.form.errors); 
+      console.log('Estado de los controles:', {
+        correo: this.form.get('correo')?.errors,
+        username: this.form.get('username')?.errors,
+        password: this.form.get('password')?.errors,
+        tipo_usuario: this.form.get('tipo_usuario')?.errors,
+      }); // Log para identificar qué campo falla
+      return;
+    }
 
     try {
-      const { correo, username, password, tipo_usuario } = this.form.value; // Cambiado 'name' a 'username'
+      const { correo, username, password, tipo_usuario } = this.form.value;
 
       console.log('Datos del formulario:', this.form.value); // Log para depuración
 
       const response = await this.authService.registerUser({
         correo: correo ?? '',
-        username: username ?? '', // Cambiado 'name' a 'username'
+        username: username ?? '',
         password: password ?? '',
         tipo_usuario: tipo_usuario ?? ''
       });

@@ -21,16 +21,17 @@
           </div>
           
           <div class="mb-3">
-            <label for="password" class="form-label">Contraseña:</label>
-            <input type="password" formControlName="password" class="form-control" id="password" placeholder="Ingresa tu contraseña">
+            <label for="password" class="form-label">Contraseña: 6 caracteres minimo</label>
+            <input type="password" formControlName="password" class="form-control" id="password" placeholder="Ingresa tu contraseña" >
           </div>
+          
           <div class="mb-3">
             <label for="tipo_usuario" class="form-label">Tipo de usuario:</label>
-              <select class="form-select" formControlName="tipo_usuario" id="tipo_usuario">
-                <option value="" disabled>Selecciona una opción</option>
-                <option value="estandar">Estandar</option>
-                <option value="admin">Administrador</option>
-              </select>
+            <select class="form-select" formControlName="tipo_usuario" id="tipo_usuario">
+              <option value="" disabled>Selecciona una opción</option>
+              <option value="estandar">Estandar</option>
+              <option value="admin">Administrador</option>
+            </select>
           </div>
   
           <input type="submit" value="Crear cuenta" class="btn btn-primary w-100 py-2 mt-3">
