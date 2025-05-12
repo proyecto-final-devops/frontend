@@ -14,6 +14,9 @@ RUN npm run build -- --output-path=dist/app-f1-shop
 #Etapa 2: Servidor ngix
 FROM nginx:alpine
 
+# Copia el archivo nginx.conf personalizado al contenedor
+COPY nginx.conf /etc/nginx/nginx.conf
+
 #copia archivos construidos de Angular al directorio de nginx
 COPY --from=build /app/dist/app-f1-shop /usr/share/nginx/html
 
