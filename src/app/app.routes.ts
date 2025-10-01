@@ -14,5 +14,5 @@ export const routes: Routes = [
   { path: 'shop', component: ShopComponent },
   { path: 'sign-up', component: SignUpComponent},
   { path: 'vista-admin', component: VistaAdminComponent},
-  { path: '**', redirectTo: 'shop' }
+  { path: '**', redirectTo: 'login' }
 ];
