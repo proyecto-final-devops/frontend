@@ -9,7 +9,7 @@
     <div class="d-flex align-items-center">
       <a type="button" class="link-offset-2 link-underline link-underline-opacity-0 me-3 text-black" [routerLink]="['/login']">Cerrar sesión</a>
       <a type="button" class=" position-relative me-3 text-black" [routerLink]="['/checkout']">
-        <i class="fa-solid fa-cart-shopping fs-2"></i>
+        <i class="fa-solid ">Receta</i>
         @if(cartItemsAmount() > 0) {
           <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
             {{ cartItemsAmount() > 99 ? '99+' : cartItemsAmount() }}
@@ -21,7 +21,7 @@
 
   <section>
     <div class="mb-3">
-      <h1>Productos</h1>
+      <h1>Medicamentos o Servicios</h1>
     </div>
 
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-3">

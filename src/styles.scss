@@ -364,3 +364,12 @@ template {
 .f1-logo {
   max-width: 10rem;
 }
+
+.navbar-farmacia {
+  background-color: #0074D9; // Azul farmacia
+  color: white;
+
+  a, i {
+    color: white !important;
+  }
+}
